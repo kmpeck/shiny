@@ -12,7 +12,7 @@ shinyServer(function(input,output)
     par(mar=c(5,5,2,2))
     plot(log10(K)~log10(mu), data=dat, xaxt='n', yaxt='n', col="grey40", 
          pch=dat$pch, 
-         xlab="", ylab="", ylim=c(-5.5,-1.5), xlim=c(-7.5,-3.5), cex=1.5,
+         xlab="", ylab="", ylim=c(-5.5,-1.5), xlim=c(-7.5,-3.2), cex=1.5,
          main=paste("You chose: ", input$virus))
     virus_of_choice <- subset(dat, dat$virus==input$virus) #names need to match exactly
     points(log10(K)~log10(mu), data=virus_of_choice, pch=virus_of_choice$pch, col=2, cex=1.5)
@@ -20,10 +20,18 @@ shinyServer(function(input,output)
     mtext(expression(paste("Mutation rate, ", mu, " (s/n/c)")),side=1,line=3, cex=1.5)
     axis(1, at=c(-7,-6,-5,-4), labels=c(expression(paste(10^{-7})), expression(paste(10^{-6})), expression(paste(10^{-5})), expression(paste(10^{-4}))), cex.axis=1.5)
     axis(2, las=2, at=c(-5,-4,-3,-2), labels=c(expression(paste(10^{-5})), expression(paste(10^{-4})), expression(paste(10^{-3})), expression(paste(10^{-2}))), cex.axis=1.5)
-
-    text(log10(mean(virus_of_choice$mu))+.3, log10(mean(virus_of_choice$K)), labels=mean(virus_of_choice$mu), col=2)
+    
+    if(input$print == "Mutation rate"){
+      text(log10(mean(virus_of_choice$mu))+.4, log10(mean(virus_of_choice$K)), labels=mean(virus_of_choice$mu), col=2)
+      
+    }
+    if(input$print == "Evolution rate"){
+      text(log10(mean(virus_of_choice$mu))+.4, log10(mean(virus_of_choice$K)), labels=round(mean(virus_of_choice$K),4), col=2)
+      
+    }
+    if(input$print == "Virus class"){
+      text(log10(mean(virus_of_choice$mu))+.5, log10(mean(virus_of_choice$K)), labels=virus_of_choice$group[1], col=2)
+      
+    }
   })
 })
-
-
-text(-7.2, -1.8, labels="B", cex=3)
