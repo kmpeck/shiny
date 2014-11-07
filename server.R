@@ -24,6 +24,3 @@ shinyServer(function(input,output)
     text(log10(mean(virus_of_choice$mu))+.3, log10(mean(virus_of_choice$K)), labels=mean(virus_of_choice$mu), col=2)
   })
 })
-
-
-text(-7.2, -1.8, labels="B", cex=3)
